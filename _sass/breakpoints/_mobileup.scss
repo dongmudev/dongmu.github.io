@@ -72,6 +72,8 @@ MENU STYLING
 
 .nav-collapse {
 	z-index: 1;
+	
+	
 
 	ul {
 		margin: 0;
@@ -79,18 +81,34 @@ MENU STYLING
 		width: 100%;
 		display: block;
 		list-style: none;
+		
 
 		li {
 			width: 100%;
 			display: block;
 			background: $background-color;
 			border-bottom: 2px solid lighten($background-color, 5%);
+			
 
 			a {
-				color: white;
+				color: $nav-text-color !important; // 添加 !important
 				text-decoration: none;
 				display: block;
 				padding: 5px 2rem;
+
+				
+
+				&:hover {
+					// color: #FFD700 !important; // 金色
+					// color: #2E8B57 !important; // 浅绿色
+					color: #FFA07A !important; // 浅鲑鱼色
+					// 或者用这些颜色：
+					// color: #FFA07A !important; // 浅鲑鱼色
+					// color: #98FB98 !important; // 浅绿色
+					// color: #87CEEB !important; // 天蓝色
+					// color: #DDA0DD !important; // 梅红色
+					transform: translateY(-1px); // 轻微上浮效果
+				}
 			}
 		}
 	}
@@ -181,12 +199,16 @@ HEADER STYLING
 
 .header {
 	background-color: $background-color;
-	background-image: url("../img/touring.jpg");
+	background-image:
+	linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+	url("../img/touring.jpg");
 	background-size: cover;
-	background-position: center center;
+	background-position: center 55%;
 	color: white;
 	padding: 0;
 	height: 3em;
+
+	
 
 	.container {
 		padding: 0;
@@ -202,9 +224,10 @@ HEADER STYLING
 		font-family: $sans-serif;
 		font-weight: 800;
 		text-transform: uppercase;
+		color: $title-color;
 
 		a {
-			color: white;
+			color: $title-color;
 			text-decoration: none;
 		}
 	}

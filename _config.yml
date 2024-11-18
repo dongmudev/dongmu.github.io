@@ -1,5 +1,5 @@
-title: Long Haul
-description: Long Form Jekyll theme built with SASS
+title: 东木咨询博客
+description: 欢迎来到的东木咨询~
 
 url: https://long-haul.netlify.app
 # Only necessary when hosting your site in a sub-directory. Project sites hosted on GitHub Pages are the common use-case of this variable.
@@ -19,12 +19,20 @@ plugins: [jekyll-paginate]
 paginate: 5
 
 navigation:
-    - title: Home
+    - title: 主页
       url: /index.html
-    - title: About
+    - title: 咨询手记
+      url: /category/counseling
+    - title: 美好情绪
+      url: /category/emotion  
+    - title: 角色榜样
+      url: /category/role-model
+    - title: 课程&咨询
+      url: /category/course
+    - title: 关于东木
       url: /about
-    - title: Contact
-      url: /contact
+    - title: 回到官网
+      url: https://www.dongmu.cc
 
 social:
     github: brianmaierjr

@@ -2,7 +2,7 @@
 	<div class="container">
 		<p class="copy">
 			&copy; {{ site.time | date: '%Y' }}
-			<a href="http://brianmaierjr.com">Brian Maier Jr.</a> Powered by
+			<a href="https://dongmu.cc">东木咨询</a> Powered by
 			<a href="http://jekyllrb.com">Jekyll</a>
 		</p>
 
@@ -29,6 +29,15 @@
 				{%- if site.social.email -%}
 					{%- include footer_links/email_icon.html -%}
 				{%- endif -%}
+				{%- if site.social.weixin_qr -%}
+					{%- include footer_links/weixin_icon.html -%}
+				{%- endif -%}
+				{%- if site.social.zsxq_qr -%}
+					{%- include footer_links/zsxq_icon.html -%}
+				{%- endif -%}
+
+
+
 			</ul>
 		</div>
 	</div>

@@ -19,18 +19,18 @@ plugins: [jekyll-paginate]
 paginate: 5
 
 navigation:
-    - title: 主页
+    - title: 首页
       url: /index.html
+    - title: 人生发展问答
+      url: /life-development
+    - title: 美好生活
+      url: /good-life
     - title: 咨询手记
-      url: /category/counseling
-    - title: 美好情绪
-      url: /category/emotion  
+      url: /counseling
     - title: 角色榜样
-      url: /category/role-model
-    - title: 课程&咨询
-      url: /category/course
-    - title: 关于东木
-      url: /about
+      url: /role-model
+    - title: 东木和我
+      url: /dongmu-and-me
     - title: 回到官网
       url: https://www.dongmu.cc
 

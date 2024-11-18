@@ -16,7 +16,7 @@ sass:
 markdown: kramdown
 highlighter: rouge
 plugins: [jekyll-paginate]
-paginate: 5
+paginate: 20
 
 navigation:
     - title: 首页

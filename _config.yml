@@ -40,7 +40,7 @@ social:
     zsxq_qr: "https://t.zsxq.com/14212OcTn"
 
 
-google_analytics: "UA-58263416-1"
+google_analytics: 
 
 disqus:
     shortname: brianmaierjr

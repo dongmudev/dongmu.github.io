@@ -3,20 +3,172 @@ layout: default
 ---
 <div class="home" id="home">
   <h1 class="pageTitle">{{ page.title | default: page.category }}</h1>
+
+
+
   <div class="posts noList">
-    {% for post in site.posts %}
-      {% if post.tags contains page.category %}
-        <article>
-          <span class="date">{{ post.date | date: '%B %d, %Y' }}</span>
-          <h3>
-            <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-          </h3>
-          <p>
-            {% if post.description %}{{ post.description }}{% else %}{{
-            post.excerpt | strip_html }}{% endif %}
-          </p>
-        </article>
+    {% if page.category == "咨询手记" %}
+    <!-- 咨询师筛选器 -->
+    <div class="consultant-tags">
+      {% assign posts = site.posts | where: "tags", "咨询手记" %}
+      {% assign consultants = "" | split: "" %}
+      {% for post in posts %}
+        {% if post.consultant %}
+          {% assign consultants = consultants | push: post.consultant %}
+        {% endif %}
+      {% endfor %}
+      {% assign unique_consultants = consultants | uniq | sort %}
+      
+      {% for consultant in unique_consultants %}
+        <a href="javascript:void(0)" 
+           class="tag"
+           data-consultant="{{ consultant }}">
+          {{ consultant }}
+          <span class="count">
+            {% assign consultant_posts = posts | where: "consultant", consultant %}
+            {{ consultant_posts | size }}
+          </span>
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+    {% assign filtered_posts = site.posts | where: "tags", page.category %}
+    {% for post in filtered_posts %}
+      <article class="post-item" data-consultant="{{ post.consultant }}">
+        <span class="date">{{ post.date | date: '%Y-%m-%d' }}</span>
+        <h3>
+          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </h3>
+        {% if post.consultant %}
+        <span class="consultant-badge">
+          <span class="consultant-label">咨询师:</span>
+          <span class="consultant-name">{{ post.consultant }}</span>
+        </span>
       {% endif %}
+        <p>
+          {% if post.description %}{{ post.description }}{% else %}{{ post.excerpt | strip_html }}{% endif %}
+        </p>
+      </article>
     {% endfor %}
   </div>
 </div>
+
+<style>
+.consultant-tags {
+  margin: 2rem 0;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.3125rem 0.9375rem;
+  margin: 0 0.1875rem 0.3125rem 0;
+  color: black;
+  text-decoration: none;
+  border: 0.0625rem solid black;
+  border-radius: 0.125rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.tag:hover,
+.tag.active {
+  color: #e51843;
+  border-color: #e51843;
+}
+
+.tag .count {
+  margin-left: 0.3125rem;
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+.consultant {
+  color: #666;
+  font-size: 0.875rem;
+  margin-right: 1rem;
+}
+
+.date {
+  color: #666;
+  font-size: 0.875rem;
+  margin-right: 1rem;
+}
+
+.post-item.hidden {
+  display: none;
+}
+
+.consultant-badge {
+  display: block;
+  margin: 0.8rem 0;
+}
+
+.consultant-label {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.consultant-name {
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: 500;
+  margin-left: 0.5rem;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const tags = document.querySelectorAll('.tag');
+  const posts = document.querySelectorAll('.post-item');
+  let activeConsultant = null;
+
+  // 从 URL 获取咨询师参数
+  const urlParams = new URLSearchParams(window.location.search);
+  const consultantFromUrl = urlParams.get('consultant');
+  if (consultantFromUrl) {
+    filterPosts(decodeURIComponent(consultantFromUrl));
+    const activeTag = document.querySelector(`.tag[data-consultant="${consultantFromUrl}"]`);
+    if (activeTag) activeTag.classList.add('active');
+  }
+
+  tags.forEach(tag => {
+    tag.addEventListener('click', function() {
+      const consultant = this.dataset.consultant;
+      
+      // 切换活动状态
+      if (activeConsultant === consultant) {
+        // 如果点击当前活动的标签，取消筛选
+        activeConsultant = null;
+        this.classList.remove('active');
+        filterPosts(null);
+      } else {
+        // 设置新的筛选
+        tags.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        activeConsultant = consultant;
+        filterPosts(consultant);
+      }
+
+      // 更新 URL
+      const url = new URL(window.location);
+      if (activeConsultant) {
+        url.searchParams.set('consultant', activeConsultant);
+      } else {
+        url.searchParams.delete('consultant');
+      }
+      window.history.pushState({}, '', url);
+    });
+  });
+
+  function filterPosts(consultant) {
+    posts.forEach(post => {
+      if (!consultant || post.dataset.consultant === consultant) {
+        post.classList.remove('hidden');
+      } else {
+        post.classList.add('hidden');
+      }
+    });
+  }
+});
+</script>

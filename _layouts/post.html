@@ -11,7 +11,13 @@ layout: default
     <h1 class="postTitle">{{ page.title }}</h1>
     <p class="meta">
       {{ page.date | date: '%B %d, %Y' }} | 
-      <span class="time">{{ page.content | strip_html | strip_newlines | size | divided_by:500 }}</span> 分钟阅读 |
+      <span class="time">{{ page.content | strip_html | strip_newlines | size | divided_by:500 }}</span> 分钟阅读
+      {% if page.consultant %}
+        <span class="consultant-badge">
+          <span class="consultant-label">咨询师:</span>
+          <span class="consultant-name">{{ page.consultant }}</span>
+        </span>
+      {% endif %}
       {% if page.tags %}
         <span class="tags">
           {% for tag in page.tags %}
@@ -46,3 +52,41 @@ layout: default
 <!-- {%- if site.disqus.shortname -%}
   {%- include disqus_comments.html -%}
 {%- endif -%} -->
+
+<style>
+.meta {
+  font-size: 1rem;
+  margin: 1.5rem 0;
+  color: #666;
+}
+
+.consultant-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+
+.consultant-label {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.consultant-name {
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: 500;
+  margin-left: 0.5rem;
+}
+
+.time, .tags {
+  font-size: 1rem;
+}
+
+.tags a {
+  color: #666;
+  text-decoration: none;
+}
+
+.tags a:hover {
+  color: #e51843;
+}
+</style>
